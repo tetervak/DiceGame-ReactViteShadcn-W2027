@@ -1,46 +1,58 @@
 import {useDice} from "../hooks/use-dice.ts";
-import * as React from "react";
 import {RollResult} from "./roll-result.tsx";
-import {Button, Col, Form, Row, Stack} from "react-bootstrap";
-import {CheckLg, XLg} from "react-bootstrap-icons";
+import {Button} from "@/components/ui/button.tsx";
+import {Label} from "@/components/ui/label.tsx";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select.tsx";
+import {Check, X} from "lucide-react";
 
 export function DiceRoller() {
-
     const {rollData, rollDice, reset, numberOfDice, setNumberOfDice} = useDice();
 
-    const onNumberOfDiceChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-        setNumberOfDice(parseInt(event.target.value))
+    const onNumberOfDiceChange = (value: string): void => {
+        setNumberOfDice(parseInt(value, 10));
     }
 
     return (
         <>
-            <h2 className="mt-4 mb-3">Dice Roller</h2>
+            <h2 className="text-2xl font-semibold mt-4 mb-3">Dice Roller</h2>
             {rollData && <RollResult data={rollData}/>}
-            <Row className="align-items-baseline my-4">
-                <Col xs="auto">
-                    <Form.Label>Number of Dice:</Form.Label>
-                </Col>
-                <Col xs="auto">
-                    <Form.Select value={numberOfDice} onChange={onNumberOfDiceChange}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </Form.Select>
-                </Col>
-            </Row>
-            <Stack direction="horizontal" gap={2} className="mb-3 ms-4">
-                <Button onClick={rollDice} variant="primary">
-                    Roll Dice<CheckLg className="ms-2"/>
+            <div className="flex items-center gap-4 my-4">
+                <Label htmlFor="number-of-dice" className="text-base font-medium">
+                    Number of Dice:
+                </Label>
+                <Select value={numberOfDice.toString()} onValueChange={onNumberOfDiceChange}>
+                    <SelectTrigger id="number-of-dice" className="w-[80px]">
+                        <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="1">1</SelectItem>
+                        <SelectItem value="2">2</SelectItem>
+                        <SelectItem value="3">3</SelectItem>
+                        <SelectItem value="4">4</SelectItem>
+                        <SelectItem value="5">5</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+            <div className="flex items-center gap-2 mb-3 ml-4">
+                <Button onClick={rollDice} className="bg-blue-600 hover:bg-blue-700 text-white">
+                    Roll Dice<Check className="ml-2 h-4 w-4"/>
                 </Button>
                 {rollData && (
-                    <Button onClick={reset} variant="outline-warning">
-                        Reset<XLg className="ms-2"/>
+                    <Button
+                        onClick={reset}
+                        variant="outline"
+                        className="border-amber-500 text-amber-600 hover:bg-amber-50 hover:text-amber-700"
+                    >
+                        Reset<X className="ml-2 h-4 w-4"/>
                     </Button>
                 )}
-            </Stack>
+            </div>
         </>
     )
-
 }

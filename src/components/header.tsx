@@ -4,8 +4,8 @@ type HeaderProps = {
 
 export function Header({title}: HeaderProps) {
     return (
-        <header className="container d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <h1>{title}</h1>
+        <header className="container mx-auto flex flex-wrap justify-center py-3 mb-4 border-b">
+            <h1 className="text-3xl font-bold">{title}</h1>
         </header>
     )
 }

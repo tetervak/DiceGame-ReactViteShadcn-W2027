@@ -1,4 +1,3 @@
-import {Stack} from "react-bootstrap";
 import {OneDice} from "./one-dice.tsx";
 
 type DiceDisplayProps = {
@@ -7,12 +6,12 @@ type DiceDisplayProps = {
 
 export function DiceDisplay({values}: DiceDisplayProps) {
     return (
-        <Stack direction="horizontal" gap={2}>
+        <div className="flex flex-row items-center gap-2">
             {values.map(
                 (value: number, index: number) => (
                     <OneDice side={value} key={`${index}_${value}`}/>
                 )
             )}
-        </Stack>
+        </div>
     )
 }
