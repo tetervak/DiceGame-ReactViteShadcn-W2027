@@ -40,9 +40,9 @@ export function HistoryProvider({children}: HistoryProviderProps) {
     }
 
     return (
-        <HistoryContext.Provider value={{historyData, addRollData, clearHistory}}>
+        <HistoryContext value={{historyData, addRollData, clearHistory}}>
         {children}
-        </HistoryContext.Provider>
+        </HistoryContext>
     );
 }
 
