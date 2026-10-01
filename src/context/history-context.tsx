@@ -1,28 +1,38 @@
-import type {HistoryData, HistoryItem} from "../data/history-data.ts";
 import type {RollData} from "../data/roll-data.ts";
-import React from "react";
+import {createContext, type ReactNode, useContext, useState} from "react";
 
-interface HistoryContextValue {
-    historyData: HistoryData;
+export interface HistoryItem {
+    id: string;
+    rollData: RollData;
+    timestamp: Date;
+}
+
+export interface HistoryData {
+    items: HistoryItem[];
+}
+
+interface HistoryContextType {
+    historyData: HistoryData | null;
     addRollData: (rollData: RollData) => void;
     clearHistory: () => void;
 }
 
-export const HistoryContext = React.createContext<HistoryContextValue>({
-    historyData: {items: []},
-    addRollData: () => {},
-    clearHistory: () => {},
-});
+export const HistoryContext = createContext<HistoryContextType | null>(null);
 
-export function HistoryProvider({children}: { children: React.ReactNode }) {
-    const [historyData, setHistoryData] = React.useState<HistoryData>({items: []});
+interface HistoryProviderProps {
+    children: ReactNode;
+}
+
+export function HistoryProvider({children}: HistoryProviderProps) {
+    const [historyData, setHistoryData] = useState<HistoryData | null>(null);
 
     const addHistoryItem = (item: HistoryItem) => {
-        setHistoryData((prevData) => ({items: [...prevData.items, item]}));
+        setHistoryData((prevData: HistoryData | null) => (
+            {items: prevData == null ? [item] : [...prevData.items, item]}));
     }
 
     const clearHistory = () => {
-        setHistoryData({items: []});
+        setHistoryData(null);
     }
 
     const addRollData = (rollData: RollData) => {
@@ -31,14 +41,14 @@ export function HistoryProvider({children}: { children: React.ReactNode }) {
 
     return (
         <HistoryContext.Provider value={{historyData, addRollData, clearHistory}}>
-    {children}
-    </HistoryContext.Provider>
-);
+        {children}
+        </HistoryContext.Provider>
+    );
 }
 
 export function useHistory() {
-    const context = React.useContext(HistoryContext);
-    if (context === undefined) {
+    const context = useContext(HistoryContext);
+    if (context === null) {
         throw new Error('useHistory must be used within a HistoryProvider');
     }
     return context;

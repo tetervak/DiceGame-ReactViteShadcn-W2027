@@ -13,7 +13,7 @@ import {X} from "lucide-react";
 export function RollHistory() {
     const {historyData, clearHistory} = useHistory();
 
-    if (historyData.items.length === 0) {
+    if (historyData === null) {
         return null;
     }
 
@@ -31,7 +31,7 @@ export function RollHistory() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {historyData.items.map((item, index) => (
+                        {historyData?.items.map((item, index) => (
                             <TableRow key={item.id} className={index % 2 === 0 ? "bg-white dark:bg-background" : "bg-muted/30"}>
                                 <TableCell className="px-4 py-2">{index + 1}</TableCell>
                                 <TableCell className="px-4 py-2">{item.rollData.values.join(' + ')}</TableCell>
