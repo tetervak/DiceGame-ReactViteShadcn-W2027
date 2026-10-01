@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {getRollData, type RollData} from "../data/roll-data.ts";
-import {useHistory} from "./use-history.ts";
+import {useHistory} from "../context/history-context.tsx";
 
 export function useDice() {
     const [rollData, setRollData] = useState<RollData | undefined>(undefined);

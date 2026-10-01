@@ -1,4 +1,4 @@
-import {useHistory} from "../hooks/use-history.ts";
+import {useHistory} from "../context/history-context.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {
     Table,

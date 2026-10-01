@@ -1,7 +1,7 @@
 import {Footer} from "./components/footer.tsx";
 import {Header} from "./components/header.tsx";
 import {DiceRoller} from "./components/dice-roller.tsx";
-import {HistoryProvider} from "./context/history-provider.tsx";
+import {HistoryProvider} from "./context/history-context.tsx";
 import {RollHistory} from "./components/roll-history.tsx";
 
 function App() {
